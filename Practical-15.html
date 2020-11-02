@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practical-15</title>
+
+    <style>
+        body{
+            background-color: gray;
+        }
+        h1{
+            text-align: center;
+            color: #fff;
+            font-size: 50px;
+        }
+        section{
+            display: flex;
+            justify-content: center;
+            align-content: center;
+        }
+        button{
+            /* text-decoration: none; */
+            /* display: block; */
+            height: 70px;
+            width: 70px;
+            /* text-align: center; */
+            color: #000;
+            border: 3px solid yellowgreen ;
+            background-color: yellow;
+            font-size: 40px;
+        }
+        #min{
+            margin-right: 100px;
+        }
+        #max{
+            margin-left: 100px;
+        }
+        p{
+            font-size: 70px;
+            color: yellow;
+            margin: 0;
+        }
+
+    </style>
+</head>
+<body>
+<h1>COUNTER</h1>
+<section>
+    <button onclick="decr()" id="min">-</button>
+    <p>0</p>
+    <button onclick="incr()" id="max">+</button>
+</section>
+<script>
+    function decr(){
+        var t = document.querySelector('p');
+        x = t.innerHTML;
+        x = x-1;
+        t.innerHTML = x;
+    }
+    function incr(){
+        var t = document.querySelector('p');
+        x = (t.innerHTML);
+        x = 1+parseInt(x);
+        t.innerHTML = x;
+    }
+</script>
+</body>
+</html>
