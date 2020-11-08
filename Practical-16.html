@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Practical-16</title>
+    <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+            integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+            crossorigin="anonymous"
+    />
+</head>
+<link rel="stylesheet" href="../css/Practical-16.css" />
+<body>
+<h1>To-do List</h1>
+<div class="container">
+    <form>
+        <input type="text" id="input" />
+        <button class="add-btn"><i class="fa fa-plus"></i></button>
+    </form>
+    <ul class="todos">
+
+    </ul>
+</div>
+<script>
+    var todos = document.querySelector(".todos");
+    var addButton = document.querySelector(".add-btn");
+    addButton.addEventListener("click", createTodo);
+    var input = document.getElementById("input");
+
+    function createTodo(e) {
+        e.preventDefault();
+        if (input.value) {
+            var newDiv = document.createElement("div");
+            newDiv.classList.add("todo");
+            var li = document.createElement("li");
+            li.innerHTML = input.value;
+            var checkBtn = document.createElement("button");
+            checkBtn.classList.add("check-btn");
+            checkBtn.addEventListener('click',function(){
+                li.classList.toggle('check');
+            })
+            checkBtn.innerHTML = '<i class="fa fa-check"></i>';
+            var deleteBtn = document.createElement("button");
+            deleteBtn.classList.add("delete-btn");
+            deleteBtn.addEventListener('click',function(){
+                todos.removeChild(newDiv);
+            })
+            deleteBtn.innerHTML = '<i class="fa fa-trash"></i>';
+            newDiv.appendChild(li);
+            newDiv.appendChild(checkBtn);
+            newDiv.appendChild(deleteBtn);
+            todos.appendChild(newDiv);
+            input.value = "";
+        }
+        else{
+            alert('Enter Value first')
+        }
+    };
+</script>
+</body>
+</html>
