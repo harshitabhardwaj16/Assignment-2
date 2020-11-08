@@ -1,63 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Practical-16</title>
-    <link
-            rel="stylesheet"
-            href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-            integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-            crossorigin="anonymous"
-    />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(to right, #89c561, #458599);
+            background-attachment: fixed;
+            min-width: 360px;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 10px;
+        }
+
+        input {
+            width: 400px;
+            min-width: 200px;
+            height: 40px;
+            outline: none;
+            border: none;
+            border-radius: 10px;
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+            padding: 15px;
+            font-size: 20px;
+            box-shadow: 4px 4px 4px black;
+        }
+
+        #addBtn {
+            width: 50px;
+            height: 40px;
+            outline: none;
+            border: none;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            font-size: 25px;
+            background-color: white;
+            color: #790c5a;
+            box-shadow: 4px 4px 4px black;
+            cursor: pointer;
+        }
+
+        #addBtn:hover {
+            background-color: #790c5a;
+            color: white;
+        }
+
+        .todo-list {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            list-style: none;
+            margin: 50px;
+        }
+
+        .todo-list-item {
+            display: flex;
+            flex-direction: row;
+            margin: 10px 15px;
+            background-color: white;
+            border-radius: 7px;
+        }
+
+        .todo-list-item li {
+            min-width: 200px;
+            padding: 8px;
+            font-size: 24px;
+        }
+
+        .todo-list-item button {
+            outline: none;
+            border: none;
+            width: 50px;
+            font-size: 25px;
+            text-align: center;
+            color: white;
+            cursor: pointer;
+        }
+
+        .complete {
+            background-color: yellowgreen;
+        }
+
+        .delete {
+            background-color: #ff414d;
+            border-bottom-right-radius: 7px;
+            border-top-right-radius: 7px;
+        }
+
+        .fa-check,
+        .fa-trash {
+            pointer-events: none;
+        }
+
+        .checked {
+            text-decoration: line-through;
+            opacity: 0.8;
+        }
+    </style>
 </head>
-<link rel="stylesheet" href="../css/Practical-16.css" />
+
 <body>
-<h1>To-do List</h1>
-<div class="container">
-    <form>
-        <input type="text" id="input" />
-        <button class="add-btn"><i class="fa fa-plus"></i></button>
-    </form>
-    <ul class="todos">
-
-    </ul>
-</div>
+<h1>FULLSTACK TO-DO LIST</h1>
+<form>
+    <input type="text" />
+    <button id="addBtn"><i class="fa fa-plus-circle"></i></button>
+</form>
+<ul class="todo-list"></ul>
 <script>
-    var todos = document.querySelector(".todos");
-    var addButton = document.querySelector(".add-btn");
-    addButton.addEventListener("click", createTodo);
-    var input = document.getElementById("input");
+    var todoTextInput = document.querySelector("input");
+    var addBtn = document.getElementById("addBtn");
+    var todoList = document.querySelector(".todo-list");
 
-    function createTodo(e) {
+    addBtn.onclick = add;
+    todoList.onclick = checkdelete;
+
+    function add(e) {
         e.preventDefault();
-        if (input.value) {
+        if (todoTextInput.value == "") {
+            alert("Please Enter Something!");
+        } else {
             var newDiv = document.createElement("div");
-            newDiv.classList.add("todo");
-            var li = document.createElement("li");
-            li.innerHTML = input.value;
-            var checkBtn = document.createElement("button");
-            checkBtn.classList.add("check-btn");
-            checkBtn.addEventListener('click',function(){
-                li.classList.toggle('check');
-            })
-            checkBtn.innerHTML = '<i class="fa fa-check"></i>';
-            var deleteBtn = document.createElement("button");
-            deleteBtn.classList.add("delete-btn");
-            deleteBtn.addEventListener('click',function(){
-                todos.removeChild(newDiv);
-            })
-            deleteBtn.innerHTML = '<i class="fa fa-trash"></i>';
-            newDiv.appendChild(li);
-            newDiv.appendChild(checkBtn);
-            newDiv.appendChild(deleteBtn);
-            todos.appendChild(newDiv);
-            input.value = "";
+            newDiv.classList.add("todo-list-item");
+
+            var newLi = document.createElement("li");
+            newLi.innerHTML = todoTextInput.value;
+            newDiv.appendChild(newLi);
+
+            var completeButton = document.createElement("button");
+            completeButton.classList.add("complete");
+            completeButton.innerHTML = '<i class="fa fa-check"></i>';
+            newDiv.appendChild(completeButton);
+
+            var deleteButton = document.createElement("button");
+            deleteButton.classList.add("delete");
+            deleteButton.innerHTML = '<i class="fa fa-trash"></i>';
+            newDiv.appendChild(deleteButton);
+
+            todoList.appendChild(newDiv);
+
+            todoTextInput.value = "";
         }
-        else{
-            alert('Enter Value first')
+    }
+
+    function checkdelete(e) {
+        var item = e.target;
+        if (item.classList[0] === "delete") {
+            var parent = item.parentElement;
+            parent.remove();
         }
-    };
+
+        if (item.classList[0] === "complete") {
+            var parent = item.parentElement;
+            parent.classList.toggle("checked")
+        }
+    }
 </script>
 </body>
+
 </html>
